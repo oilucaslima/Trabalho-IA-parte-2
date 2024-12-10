@@ -234,7 +234,7 @@ void greedy(vector<vector<int>>& matriz, int start, int end) {
     vector<bool> visited(n, false); // Para rastrear nós visitados
     priority_queue<std::pair<int, int>, vector<std::pair<int, int>>, std::greater<>> pq;
 
-    //cout << (char)(start + 'A') << " "; // Imprime o nó inicial
+    cout << (char)(start + 'A') << " "; // Imprime o nó inicial
     visited[start] = true; // Marca o nó inicial como visitado
     memoryGreedy += (sizeof(visited) + sizeof(pq));
 
