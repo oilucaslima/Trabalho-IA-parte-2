@@ -222,7 +222,59 @@ void AStar(vector<vector<int>>& matriz, int start, int end) {
 void call_astar() {
     cout << "\n -- A* com Heurística de Manhattan -- " << endl;
     int start = 20; // 'U'
-    int end = 1;   // 'E'
+    int end = 4;   // 'E'
 
     AStar(matriz, start, end);
+}
+
+size_t memoryGreedy = 0;
+
+void greedy(vector<vector<int>>& matriz, int start, int end) {
+    int n = matriz.size();
+    vector<bool> visited(n, false); // Para rastrear nós visitados
+    priority_queue<std::pair<int, int>, vector<std::pair<int, int>>, std::greater<>> pq;
+
+    //cout << (char)(start + 'A') << " "; // Imprime o nó inicial
+    visited[start] = true; // Marca o nó inicial como visitado
+    memoryGreedy += (sizeof(visited) + sizeof(pq));
+
+    while (start != end) {
+        bool found = false; // Verifica se há caminhos disponíveis a partir do nó atual
+
+        for (int i = 0; i < n; i++) {
+            if (matriz[start][i] && !visited[i]) {
+                memoryGreedy += (sizeof(i) + sizeof(int));
+                pq.push({heuristicaManhattan(i, end), i});
+            }
+        }
+
+        while (!pq.empty()) {
+            int next = pq.top().second;
+            pq.pop();
+
+            if (!visited[next]) {
+                start = next; // Atualiza o nó atual
+                visited[start] = true; // Marca como visitado
+                cout << (char)(start + 'A') << " "; // Imprime o nó atual
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) { // Caso em que não há mais caminhos disponíveis
+            cout << "\nCaminho não encontrado ou nó final inacessível!" << endl;
+            return;
+        }
+    }
+
+    //cout << "\nChegou ao destino: " << (char)(end + 'A') << endl;
+    cout << "\nMemória usada: " << memoryGreedy << " B" << endl;
+}
+
+void call_greedy(){
+    cout << "\n -- Guloso com Heurística de Manhattan -- " << endl;
+    int start = 20; // 'U'
+    int end = 4;   // 'E'
+
+    greedy(matriz, start, end);
 }

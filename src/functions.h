@@ -18,6 +18,8 @@ void call_bfs();
 void AStar(vector<vector<int>>& matriz, int start, int end);
 int heuristicaManhattan(int atual, int destino);
 void call_astar();
+void greedy(vector<vector<int>>& matriz, int start, int end);
+void call_greedy();
 
 
 
